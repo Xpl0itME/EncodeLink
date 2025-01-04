@@ -1,0 +1,150 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>URL Encoder and Decoder</title>
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      height: 100vh;
+      margin: 0;
+      background-color: #f4f4f4;
+      transition: background-color 0.3s ease, color 0.3s ease;
+    }
+    .container {
+      background: #fff;
+      padding: 20px;
+      border-radius: 10px;
+      box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+      width: 100%;
+      max-width: 600px;
+      transition: background-color 0.3s ease, color 0.3s ease;
+    }
+    h1 {
+      text-align: center;
+      margin-bottom: 20px;
+    }
+    textarea {
+      width: 100%;
+      height: 150px;
+      margin: 10px 0;
+      padding: 10px;
+      border: 1px solid #ccc;
+      border-radius: 5px;
+      font-size: 16px;
+    }
+    button {
+      width: 100%;
+      padding: 10px;
+      background-color: #4CAF50;
+      color: white;
+      font-size: 16px;
+      border: none;
+      border-radius: 5px;
+      cursor: pointer;
+      margin-top: 10px;
+    }
+    button:hover {
+      background-color: #45a049;
+    }
+    .output {
+      margin-top: 20px;
+      padding: 10px;
+      border: 1px solid #ddd;
+      border-radius: 5px;
+      font-family: monospace;
+      word-wrap: break-word;
+    }
+    .light-theme {
+      background-color: #f4f4f4;
+      color: #333;
+    }
+    .dark-theme {
+      background-color: #333;
+      color: #fff;
+    }
+    .dark-theme .container {
+      background-color: #444;
+      color: #fff;
+    }
+    .button-container {
+      display: flex;
+      justify-content: space-between;
+      gap: 10px;
+    }
+    .button-container button {
+      width: 48%;
+    }
+  </style>
+</head>
+<body class="light-theme">
+
+  <div class="container">
+    <h1>URL Encoder and Decoder</h1>
+    <textarea id="inputText" placeholder="Enter URL or text here..."></textarea>
+    
+    <div class="button-container">
+      <button onclick="encodeUrl()">Encode URL</button>
+      <button onclick="decodeUrl()">Decode URL</button>
+    </div>
+    
+    <div class="button-container">
+      <button onclick="copyToClipboard()">Copy Output</button>
+      <button onclick="clearFields()">Clear</button>
+    </div>
+
+    <div id="output" class="output"></div>
+
+    <button onclick="toggleTheme()">Toggle Theme</button>
+  </div>
+
+  <script>
+    function encodeUrl() {
+      const inputText = document.getElementById('inputText').value;
+      const encodedText = encodeURIComponent(inputText);
+      document.getElementById('output').textContent = encodedText;
+    }
+
+    function decodeUrl() {
+      const inputText = document.getElementById('inputText').value;
+      const decodedText = decodeURIComponent(inputText);
+      document.getElementById('output').textContent = decodedText;
+    }
+
+    function copyToClipboard() {
+      const outputText = document.getElementById('output').textContent;
+      if (outputText) {
+        navigator.clipboard.writeText(outputText).then(() => {
+          alert('Output copied to clipboard!');
+        });
+      } else {
+        alert('No output to copy!');
+      }
+    }
+
+    function clearFields() {
+      document.getElementById('inputText').value = '';
+      document.getElementById('output').textContent = '';
+    }
+
+    function toggleTheme() {
+      const body = document.body;
+      const container = document.querySelector('.container');
+      const currentTheme = body.classList.contains('light-theme') ? 'light' : 'dark';
+
+      if (currentTheme === 'light') {
+        body.classList.replace('light-theme', 'dark-theme');
+        container.classList.replace('light-theme', 'dark-theme');
+      } else {
+        body.classList.replace('dark-theme', 'light-theme');
+        container.classList.replace('dark-theme', 'light-theme');
+      }
+    }
+  </script>
+
+</body>
+</html>
